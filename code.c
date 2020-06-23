@@ -11,6 +11,8 @@ int caps=0,small=0,numbers=0,special_characters=0;
 char temp_name[50],temp_pass[100];
 void signup();
 int validate();
+int input_valid();
+void login();
 int main()
 {
 	while(1)
@@ -20,11 +22,11 @@ int main()
 		scanf("%d",&choice);
 		switch(choice)
 		{
-			/*case 1:
+			case 1:
 			{
 				login();
 				break;
-			}*/
+			}
 			case 2:
 			{
 				signup();
@@ -58,7 +60,12 @@ int validate()
 	}
 	if(i==100)
 	{
-		for(i=0;temp_name[i]!='\0';i++)
+		input_valid();
+	}	
+}
+int input_valid()
+{
+	for(i=0;temp_name[i]!='\0';i++)
 		{
 			if(!((temp_name[i]>='a' && temp_name[i]<='z')||(temp_name[i]>='A' && temp_name[i]<='Z')))
 			{
@@ -90,11 +97,10 @@ int validate()
 			}
 			else
 			{
-				printf("\nYour password is weak, Please Enter the Strong Password!!\n");
+				printf("\n\nYour password is weak, Please Enter the Strong Password!!\n\n");
 				main();	
 			}
 		}
-	}	
 }
 void signup()
 {
@@ -108,7 +114,40 @@ void signup()
 		strcpy(s[j].name,temp_name);
 		strcpy(s[j].password,temp_pass);
 		j++;
-		printf("\nSignup Successfully\n");	
+		printf("\n\nSignup Successfully\n\n");	
+	}
+}
+void login()
+{
+	printf("Enter Your Name\t");
+	scanf("%s",temp_name);
+	printf("Enter Your Password\t");
+	scanf("%s",temp_pass);
+	x=input_valid();
+	if(x==1)
+	{
+		for(i=0;i<100;i++)
+		{
+			if(!strcmp(s[i].name,temp_name))
+			{
+				if(!strcmp(s[i].password,temp_pass))
+				{
+					printf("\n\n\nLogin Successful !!\n\nWelcome %s\n\n\n",s[i].name);
+					break;	
+				}	
+				else
+				{
+					printf("\n\nInvalid Username or Password\n\n");
+					break;
+				}
+			}
+			else
+			{
+				printf("\n\nAccount does not exist! Please signup..\n\n");
+				main();
+				break;
+			}
+		}
 	}
 }
 
